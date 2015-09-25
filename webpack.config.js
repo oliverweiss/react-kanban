@@ -1,5 +1,6 @@
 var path = require('path');
-var HtmlwebpackPlugin = require('html-webpack-plugin');
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var ROOT_PATH = path.resolve(__dirname);
 
@@ -10,8 +11,15 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new HtmlwebpackPlugin({
+    new HtmlWebpackPlugin({
       title: 'Kanban app'
-    })
-  ]
+    }),
+    new webpack.HotModuleReplacementPlugin()
+  ],
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    inline: true,
+    progress: true
+  }
 };
