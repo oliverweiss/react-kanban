@@ -13,6 +13,9 @@ export default class App extends React.Component {
 				{id: uuid.v4(), task: 'Do the Laundry'},
 			]
 		};
+		
+		this.addNote = this.addNote.bind(this);
+		this.remNote = this.remNote.bind(this);
 	}
 
 	render() {
@@ -20,12 +23,19 @@ export default class App extends React.Component {
 		return (
 			<div>
 				<button className='add-note' onClick={this.addNote}>Add</button>
+				<button className='rem-note' onClick={this.remNote}>Remove</button>
 				<Notes items={notes} />
 			</div>
 		);
 	}
 	
 	addNote() {
-		console.debug('New note!!');
+		const empty = {id: uuid.v4(), task:'New task'};
+		this.setState({notes: this.state.notes.concat(empty)});
+	}
+	
+	remNote(){
+		this.setState({notes: this.state.notes.slice(0, -1)});
+		console.debug("rem note!");
 	}
 }
