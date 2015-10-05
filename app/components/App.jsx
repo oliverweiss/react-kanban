@@ -17,6 +17,15 @@ export default class App extends React.Component {
 
 	render() {
 		const notes = this.state.notes;
-		return <Notes items={notes} />;
+		return (
+			<div>
+				<button className='add-note' onClick={this.addNote}>Add</button>
+				<Notes items={notes} />
+			</div>
+		);
+	}
+	
+	addNote() {
+		console.debug('New note!!');
 	}
 }
