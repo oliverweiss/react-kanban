@@ -36,6 +36,5 @@ export default class App extends React.Component {
 	
 	remNote(){
 		this.setState({notes: this.state.notes.slice(0, -1)});
-		console.debug("rem note!");
 	}
 }
