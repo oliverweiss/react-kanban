@@ -12,6 +12,7 @@ export default class Note extends React.Component {
 		this.renderTask = this.renderTask.bind(this);
 		this.edit = this.edit.bind(this);
 		this.finishEdit = this.finishEdit.bind(this);
+		this.checkEnter = this.checkEnter.bind(this);
 	}
 	
 	render() {
