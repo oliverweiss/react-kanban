@@ -16,6 +16,8 @@ export default class App extends React.Component {
 		
 		this.addNote = this.addNote.bind(this);
 		this.remNote = this.remNote.bind(this);
+		this.editNote = this.editNote.bind(this);
+		this.findNoteIndex = this.findNoteIndex.bind(this);
 	}
 
 	render() {
@@ -24,7 +26,7 @@ export default class App extends React.Component {
 			<div>
 				<button className='add-note' onClick={this.addNote}>Add</button>
 				<button className='rem-note' onClick={this.remNote}>Remove</button>
-				<Notes items={notes} />
+				<Notes items={notes} onEdit={this.editNote} />
 			</div>
 		);
 	}
@@ -37,4 +39,22 @@ export default class App extends React.Component {
 	remNote(){
 		this.setState({notes: this.state.notes.slice(0, -1)});
 	}
+	
+	editNote(noteId, task) {
+		let notes = this.state.notes;
+		const idx = this.findNoteIndex(noteId);
+		if (idx < 0) return;
+		notes[idx].task = task;
+		this.setState({notes});
+	}
+	
+	findNoteIndex(id) {
+		var notes = this.state.notes;
+		for (var i = 0; i < notes.length; i++) {
+			if (notes[i].id === id) return i;
+		}
+		console.warn('Note was not found', notes, id);
+		return -1;
+	}
+
 }
