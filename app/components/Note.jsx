@@ -17,6 +17,7 @@ export default class Note extends React.Component {
 	render() {
 		return (
 			<div>
+				<button className='remove-note' onClick={this.props.onRemove}>Remove</button>
 				{this.state.editing ? this.renderEdit() : this.renderTask()}
 			</div>
 		);
@@ -32,7 +33,7 @@ export default class Note extends React.Component {
 	}
 	
 	renderTask() {
-		return <h1 onClick={this.edit}>{this.props.task}</h1>;
+		return <div onClick={this.edit}>{this.props.task}</div>;
 	}
 	
 	edit() {
