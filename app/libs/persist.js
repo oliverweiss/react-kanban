@@ -4,7 +4,6 @@ export default function(alt, storage, storeName) {
   const finalStore = makeFinalStore(alt);
 
   try {
-    console.debug('persist');
     alt.bootstrap(storage.get(storeName));
   }
   catch(e) {

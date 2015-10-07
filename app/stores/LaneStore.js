@@ -6,13 +6,14 @@ class LaneStore {
 	constructor() {
 		this.bindActions(LaneActions);
 		
-		this.lanes = [];
+		this.lanes = [{notes:[], id: uuid.v4(), name: 'Todo'}];
 	}
 	
 	create(lane) {
 		const lanes = this.lanes;
 		lane.id = uuid.v4();
 		lane.notes = lane.notes || [];
+		lane.name = 'New Lane';
 		this.setState({lanes: lanes.concat(lane)});
 	}	
 }

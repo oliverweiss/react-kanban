@@ -7,10 +7,11 @@ import connect from '../decorators/connect.jsx';
 @connect(LaneStore)
 export default class App extends React.Component {
 	render() {
+		const lanes = this.props.lanes;
 		return (
 			<div>
-				<button className='add-lane' onClick={this.addLane}>Add</button>
-				<Lanes />
+				<button className='add-lane' onClick={this.addLane}>Add lane</button>
+				<Lanes items={lanes}/>
 			</div>
 		);
 	}
