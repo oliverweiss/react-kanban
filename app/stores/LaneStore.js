@@ -26,7 +26,7 @@ class LaneStore {
 		}
 		
 		const lanes = this.lanes;
-		const targetId = this.findLane(laneId);
+		const targetId = this.findLaneIndex(laneId);
 		
 		if (targetId < 0) return;
 		
@@ -43,7 +43,7 @@ class LaneStore {
 	
 	detach({laneId, noteId}) {
 		const lanes = this.lanes;
-		const targetId = this.findLane(laneId);
+		const targetId = this.findLaneIndex(laneId);
 		
 		if (targetId < 0) return;
 		
@@ -60,7 +60,7 @@ class LaneStore {
 	}
 	
 	
-	findLane(id) {
+	findLaneIndex(id) {
 		return find.byId(this.lanes, id);
 	}
 }

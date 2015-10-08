@@ -3,11 +3,21 @@ import connect from '../decorators/connect.jsx';
 import NoteStore from '../stores/NoteStore.js';
 import NoteActions from '../actions/NoteActions.js';
 import Notes from './Notes.jsx';
+import LaneActions from '../actions/LaneActions.js';
 
 @connect(NoteStore)
 export default class Lane extends React.Component {
+	constructor(props) {
+		super(props);
+		const id = props.lane.id;
+		
+		this.addNote = this.addNote.bind(this, id);
+		this.removeNote = this.removeNote.bind(this, id);
+	}
+	
 	render() {
-		const {lane, notes, ...props} = this.props;
+		const {lane, ...props} = this.props;
+		const notes = lane.notes;
 		return (
 			<div {...props}>
 				<div className="lane-header">
@@ -16,20 +26,22 @@ export default class Lane extends React.Component {
 						<button onClick={this.addNote}>Add note</button>
 					</div>
 				</div>
-				<Notes items={notes} onEdit={this.editNote} onRemove={this.removeNote} />
+				<Notes items={NoteStore.get(notes)} onEdit={this.editNote} onRemove={this.removeNote} />
 			</div>
 		);
 	}
 	
-	addNote() {
+	addNote(laneId) {
 		NoteActions.create({task: "New task"});
+		LaneActions.attach({laneId});
 	}
 	
 	editNote(id, task) {
 		NoteActions.update({id, task});
 	}
 	
-	removeNote(id) {
-		NoteActions.delete(id);
+	removeNote(laneId, noteId) {
+		LaneActions.detach({laneId, noteId});
+		NoteActions.delete(noteId);
 	}
 }

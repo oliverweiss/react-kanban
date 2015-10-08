@@ -8,7 +8,11 @@ class NoteStore {
 		this.bindActions(NoteActions);
 		
 		this.notes = [];
-	}
+		
+		this.exportPublicMethods({
+			get: this.get.bind(this)
+		});
+			}
 	
 	create(note) {
 		const notes = this.notes;
@@ -17,8 +21,8 @@ class NoteStore {
 	}
 	
 	update({id, task}) {
-		let notes = this.notes;
-		const idx = this.findNoteIndex(id);
+		const notes = this.notes;
+		const idx = find.byId(notes, id);
 		if (idx < 0) return;
 		notes[idx].task = task;
 		this.setState({notes});
@@ -26,15 +30,18 @@ class NoteStore {
 	
 	delete(id) {
 		const notes = this.notes;
-		const idx = this.findNoteIndex(id);
+		const idx = find.byId(notes, id);
 		if (idx < 0) return;
 		this.setState({notes: notes.slice(0, idx).concat(notes.slice(idx+1))});		
 	}
 	
-	findNoteIndex(id) {
-		return find.byId(this.notes, id);
+	get(ids) {
+		const notes = this.notes;
+		return (ids||[])
+			.map(id => find.byId(notes, id))
+			.filter(idx => idx >= 0)
+			.map(idx => notes[idx]);	
 	}
-
 }
 
 export default alt.createStore(NoteStore, 'NoteStore');
