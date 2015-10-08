@@ -1,6 +1,7 @@
 import uuid from 'node-uuid';
 import alt from '../libs/alt';
 import NoteActions from '../actions/NoteActions';
+import find from '../libs/find';
 
 class NoteStore {
 	constructor() {
@@ -31,12 +32,7 @@ class NoteStore {
 	}
 	
 	findNoteIndex(id) {
-		const notes = this.notes;
-		for (var i = 0; i < notes.length; i++) {
-			if (notes[i].id === id) return i;
-		}
-		console.warn('Note was not found', notes, id);
-		return -1;
+		return find.byId(this.notes, id);
 	}
 
 }
