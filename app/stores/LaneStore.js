@@ -1,6 +1,7 @@
 import uuid from 'node-uuid';
 import alt from '../libs/alt';
 import LaneActions from '../actions/LaneActions';
+import NoteActions from '../actions/NoteActions';
 import NoteStore from './NoteStore';
 import find from '../libs/find';
 
@@ -22,11 +23,12 @@ class LaneStore {
 	delete(id) {
 		const lanes = this.lanes;
 		const targetId = this.findLaneIndex(id);
-		
-		if (targetId < 0) return;
-				
+			
+						
 		if (targetId >= 0) {
+			const lane = lanes[targetId];
 			this.setState({lanes: lanes.slice(0, targetId).concat(lanes.slice(targetId+1))});
+			lane.notes.map(n => NoteActions.delete.defer(n));
 		}
 		else
 			console.warn('Failed to delete lane '+id+'.');
