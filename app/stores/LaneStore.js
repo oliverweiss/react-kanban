@@ -19,6 +19,19 @@ class LaneStore {
 		this.setState({lanes: lanes.concat(lane)});
 	}
 	
+	delete(id) {
+		const lanes = this.lanes;
+		const targetId = this.findLaneIndex(id);
+		
+		if (targetId < 0) return;
+				
+		if (targetId >= 0) {
+			this.setState({lanes: lanes.slice(0, targetId).concat(lanes.slice(targetId+1))});
+		}
+		else
+			console.warn('Failed to delete lane '+id+'.');
+	}
+	
 	rename({id, name}) {
 		const lanes = this.lanes;
 		const targetId = this.findLaneIndex(id);

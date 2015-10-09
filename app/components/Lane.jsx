@@ -15,6 +15,7 @@ export default class Lane extends React.Component {
 		this.addNote = this.addNote.bind(this, id);
 		this.removeNote = this.removeNote.bind(this, id);
 		this.editLane = this.editLane.bind(this, id);
+		this.removeLane = this.removeLane.bind(this, id);
 	}
 	
 	render() {
@@ -25,7 +26,8 @@ export default class Lane extends React.Component {
 				<div className="lane-header">
 					<Editable className="lane-name"
 						value={lane.name}
-						onEdit={this.editLane} />
+						onEdit={this.editLane}
+						onRemove={this.removeLane} />
 					<div className="lane-add-note">
 						<button onClick={this.addNote}>Add note</button>
 					</div>
@@ -35,9 +37,12 @@ export default class Lane extends React.Component {
 		);
 	}
 	
+	removeLane(id) {
+		LaneActions.delete(id);
+	}
+	
 	editLane(id, name) {
 		LaneActions.rename({id, name});
-		console.debug('Lane rename id:'+id+', name:'+name);
 	}
 	
 	addNote(laneId) {
