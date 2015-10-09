@@ -8,7 +8,7 @@ class LaneStore {
 	constructor() {
 		this.bindActions(LaneActions);
 		
-		this.lanes = [{notes:[], id: uuid.v4(), name: 'Todo'}];
+		this.lanes = [];
 	}
 	
 	create(lane) {
