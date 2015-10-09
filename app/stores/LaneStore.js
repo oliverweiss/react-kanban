@@ -19,6 +19,17 @@ class LaneStore {
 		this.setState({lanes: lanes.concat(lane)});
 	}
 	
+	rename({id, name}) {
+		const lanes = this.lanes;
+		const targetId = this.findLaneIndex(id);
+		
+		if (targetId < 0) return;
+		
+		lanes[targetId].name = name;
+
+		this.setState({lanes});
+	}
+	
 	attach({laneId, noteId}) {
 		if(!noteId) {
 			this.waitFor(NoteStore);

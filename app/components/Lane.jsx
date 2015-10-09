@@ -36,6 +36,7 @@ export default class Lane extends React.Component {
 	}
 	
 	editLane(id, name) {
+		LaneActions.rename({id, name});
 		console.debug('Lane rename id:'+id+', name:'+name);
 	}
 	
