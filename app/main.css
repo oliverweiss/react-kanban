@@ -33,6 +33,11 @@ body {
   display: inline-block;
 }
 
+.note .value {
+  /* force to use inline-block so that it gets minimum height */
+  display: inline-block;
+}
+
 .note .remove {
   float: right;
   padding: 0;

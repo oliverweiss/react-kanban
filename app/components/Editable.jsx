@@ -1,43 +1,43 @@
 import React from 'react';
 
-export default class Note extends React.Component {
+export default class Editable extends React.Component {
 	constructor(props) {
 		super(props);
+		this.renderValue = this.renderValue.bind(this);
+	
+		this.state = {editing:false};
 		
-		this.state = {
-			editing: false
-		};
-		
-		this.renderEdit = this.renderEdit.bind(this);
-		this.renderTask = this.renderTask.bind(this);
 		this.edit = this.edit.bind(this);
-		this.finishEdit = this.finishEdit.bind(this);
 		this.checkEnter = this.checkEnter.bind(this);
+		this.finishEdit = this.finishEdit.bind(this);
 	}
 	
 	render() {
+		const {value, onEdit, ...props} = this.props;
+		const editing = this.state.editing;
+		
 		return (
-			<div>
-				{this.state.editing ? this.renderEdit() : this.renderTask()}
+			<div {...props}>
+				{editing ? this.renderEdit() : this.renderValue()}
 			</div>
 		);
 	}
 	
 	renderEdit() {
-		return <input
-			type='text'
+		return <input type="text"
 			autoFocus={true}
-			defaultValue={this.props.task}
+			defaultValue={this.props.value}
 			onBlur={this.finishEdit}
 			onKeyPress={this.checkEnter} />;
 	}
 	
-	renderTask() {
+	renderValue() {
 		const onRemove = this.props.onRemove;
+		
 		return (
 			<div>
+				<span onClick={this.edit} className="value">{this.props.value}</span>
 				{onRemove ? this.renderRemove() : null}
-				<span className='task' onClick={this.edit}>{this.props.task}</span>
 			</div>
 		);
 	}
@@ -60,4 +60,7 @@ export default class Note extends React.Component {
 		this.props.onEdit(e.target.value);
 		this.setState({editing: false});
 	}
+
+
+
 }

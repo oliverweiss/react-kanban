@@ -3,6 +3,7 @@ import connect from '../decorators/connect.jsx';
 import NoteStore from '../stores/NoteStore.js';
 import NoteActions from '../actions/NoteActions.js';
 import Notes from './Notes.jsx';
+import Editable from './Editable.jsx';
 import LaneActions from '../actions/LaneActions.js';
 
 @connect(NoteStore)
@@ -13,6 +14,7 @@ export default class Lane extends React.Component {
 		
 		this.addNote = this.addNote.bind(this, id);
 		this.removeNote = this.removeNote.bind(this, id);
+		this.editLane = this.editLane.bind(this, id);
 	}
 	
 	render() {
@@ -21,7 +23,9 @@ export default class Lane extends React.Component {
 		return (
 			<div {...props}>
 				<div className="lane-header">
-					<div className="lane-name">{lane.name}</div>
+					<Editable className="lane-name"
+						value={lane.name}
+						onEdit={this.editLane} />
 					<div className="lane-add-note">
 						<button onClick={this.addNote}>Add note</button>
 					</div>
@@ -29,6 +33,10 @@ export default class Lane extends React.Component {
 				<Notes items={NoteStore.get(notes)} onEdit={this.editNote} onRemove={this.removeNote} />
 			</div>
 		);
+	}
+	
+	editLane(id, name) {
+		console.debug('Lane rename id:'+id+', name:'+name);
 	}
 	
 	addNote(laneId) {
