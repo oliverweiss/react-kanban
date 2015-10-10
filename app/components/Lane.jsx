@@ -6,33 +6,41 @@ import Notes from './Notes.jsx';
 import Editable from './Editable.jsx';
 import LaneActions from '../actions/LaneActions.js';
 
+class Lane extends React.Component {
+	render() {
+		return (
+			 <div className="lane">
+				{this.props.children}
+			</div>
+		);
+	}
+	componentWillUnmount() { }
+	storeChanged() { }
+}
+
+Lane.Header =
 @connect(NoteStore)
-export default class Lane extends React.Component {
+class LaneHeader extends React.Component {
 	constructor(props) {
 		super(props);
-		const id = props.lane.id;
+		const id = props.id;
 		
 		this.addNote = this.addNote.bind(this, id);
-		this.removeNote = this.removeNote.bind(this, id);
 		this.editLane = this.editLane.bind(this, id);
 		this.removeLane = this.removeLane.bind(this, id);
 	}
-	
+
 	render() {
-		const {lane, ...props} = this.props;
-		const notes = lane.notes;
+		const {name, ...props} = this.props;
 		return (
-			<div {...props}>
-				<div className="lane-header">
-					<Editable className="lane-name"
-						value={lane.name}
-						onEdit={this.editLane}
-						onRemove={this.removeLane} />
-					<div className="lane-add-note">
-						<button onClick={this.addNote}>Add note</button>
-					</div>
+			<div className="lane-header" {...props}>
+				<Editable className="lane-name"
+					value={name}
+					onEdit={this.editLane}
+					onRemove={this.removeLane} />
+				<div className="lane-add-note">
+					<button onClick={this.addNote}>Add note</button>
 				</div>
-				<Notes items={NoteStore.get(notes)} onEdit={this.editNote} onRemove={this.removeNote} />
 			</div>
 		);
 	}
@@ -48,8 +56,27 @@ export default class Lane extends React.Component {
 	addNote(laneId) {
 		NoteActions.create({task: "New task"});
 		LaneActions.attach({laneId});
+	}	
+}
+
+Lane.Notes = 
+@connect(NoteStore)
+class LaneNotes extends React.Component {
+	constructor(props) {
+		super(props);
+		const id = props.id;
+		
+		this.removeNote = this.removeNote.bind(this, id);
 	}
-	
+
+	render() {
+		const {items, ...props} = this.props;
+		
+		return (
+			<Notes items={NoteStore.get(items)} onEdit={this.editNote} onRemove={this.removeNote} />
+		);
+	}
+
 	editNote(id, task) {
 		NoteActions.update({id, task});
 	}
@@ -59,3 +86,5 @@ export default class Lane extends React.Component {
 		NoteActions.delete(noteId);
 	}
 }
+
+export default Lane;

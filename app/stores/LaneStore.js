@@ -23,8 +23,7 @@ class LaneStore {
 	delete(id) {
 		const lanes = this.lanes;
 		const targetId = this.findLaneIndex(id);
-			
-						
+	
 		if (targetId >= 0) {
 			const lane = lanes[targetId];
 			this.setState({lanes: lanes.slice(0, targetId).concat(lanes.slice(targetId+1))});
