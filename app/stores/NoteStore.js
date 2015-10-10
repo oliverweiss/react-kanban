@@ -35,6 +35,11 @@ class NoteStore {
 		this.setState({notes: notes.slice(0, idx).concat(notes.slice(idx+1))});		
 	}
 	
+	deletemany(ids) {
+		const notes = this.notes;
+		this.setState({notes: notes.filter(n => ids.every(id => id != n))});
+	}
+	
 	get(ids) {
 		const notes = this.notes;
 		return (ids||[])

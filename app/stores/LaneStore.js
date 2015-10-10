@@ -27,7 +27,7 @@ class LaneStore {
 		if (targetId >= 0) {
 			const lane = lanes[targetId];
 			this.setState({lanes: lanes.slice(0, targetId).concat(lanes.slice(targetId+1))});
-			lane.notes.map(n => NoteActions.delete.defer(n));
+			NoteActions.deletemany.defer(lane.notes);
 		}
 		else
 			console.warn('Failed to delete lane '+id+'.');
