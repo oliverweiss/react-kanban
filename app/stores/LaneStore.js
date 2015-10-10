@@ -30,7 +30,7 @@ class LaneStore {
 			NoteActions.deletemany.defer(lane.notes);
 		}
 		else
-			console.warn('Failed to delete lane '+id+'.');
+			console.warn(`Failed to delete lane ${id}.`);
 	}
 	
 	rename({id, name}) {
@@ -62,7 +62,7 @@ class LaneStore {
 			this.setState({lanes});
 		}
 		else {
-			console.warn('Note ${noteId} already attached to lane ${lane.id}');
+			console.warn(`Note ${noteId} already attached to lane ${lane.id}`);
 		}
 	}
 	
@@ -81,7 +81,7 @@ class LaneStore {
 			this.setState({lanes});
 		}
 		else
-			console.warn('Failed to remove note ${noteId} from lane ${laneId}');
+			console.warn(`Failed to remove note ${noteId} from lane ${laneId}`);
 	}
 	
 	
