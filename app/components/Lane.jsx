@@ -78,7 +78,7 @@ class LaneNotes extends React.Component {
 			<Notes items={NoteStore.get(items)}
 				onEdit={this.editNote}
 				onRemove={this.removeNote}
-				onDrop={this.dropNote}
+				dropNote={this.dropNote}
 				dragNote={this.dragNote} />
 		);
 	}
@@ -92,24 +92,18 @@ class LaneNotes extends React.Component {
 		NoteActions.delete(noteId);
 	}
 	
-	dropNote(targetLaneId, targetNoteId, ev) {
-		LaneActions.drop(sourceLaneId, sourceNoteId, targetLaneId, targetNoteId);
+	dropNote(laneId, noteId, ev) {
+		ev.preventDefault();
+		const source = JSON.parse(ev.dataTransfer.getData("text/json"));
+		const target = {laneId, noteId};
+		LaneActions.drop({source, target});
 	}
 	
 	dragNote(laneId, noteId, ev) {
 		ev.dataTransfer.effectAllowed = 'move';
-		ev.dataTransfer.setData("text", JSON.stringify({laneId, noteId}));
+		ev.dataTransfer.setData("text/json", JSON.stringify({laneId, noteId}));
 		console.log(`Note dragged: ${laneId}, ${noteId}.`);
 	}
-	
-//	onDrop(id, ev) {
-//		console.log(`Drop note: ${id}.`);
-//		ev.preventDefault();
-//	    const data = ev.dataTransfer.getData("text");
-//		console.log(`Drop note: ${data} over ${id}.`);
-//	}
-
-
 }
 
 export default Lane;

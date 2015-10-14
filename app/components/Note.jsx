@@ -6,8 +6,7 @@ export default class Note extends React.Component {
 		const id = props.id;
 
 		this.onDragStart = this.onDragStart.bind(this, id);		
-//		this.onDrag = this.props.onDrag.bind(this, id);
-//		this.onDrop = this.props.onDrop.bind(this, id);
+		this.onDrop = this.onDrop.bind(this, id);		
 	}
 
 	render() {
@@ -17,7 +16,7 @@ export default class Note extends React.Component {
 			<li className='note'
 				draggable='true'
 				onDragStart={this.onDragStart}
-				onDrop={this.props.onDrop}
+				onDrop={this.onDrop}
 				onDragOver={this.allowDrop}>
 				{this.props.children}
 			</li>
@@ -28,5 +27,9 @@ export default class Note extends React.Component {
 	
 	onDragStart(noteId, ev) {
 		this.props.dragNote(noteId, ev);
+	}
+	
+	onDrop(noteId, ev) {
+		this.props.dropNote(noteId, ev);
 	}
 }

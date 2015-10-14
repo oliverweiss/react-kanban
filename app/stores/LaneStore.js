@@ -84,8 +84,8 @@ class LaneStore {
 			console.warn(`Failed to remove note ${noteId} from lane ${laneId}`);
 	}
 	
-	drop({sourceLaneId, sourceNoteId, targetLaneId, targetNoteId}) {
-		console.log(`Move note ${sourceNoteId} from lane ${sourceLaneId} to note ${targetNoteId} in lane ${targetLaneId}.`);
+	drop({source, target}) {
+		console.log(`Move note ${source.noteId} from lane ${source.laneId} to note ${target.noteId} in lane ${target.laneId}.`);
 	}
 	
 	findLaneIndex(id) {
