@@ -87,10 +87,27 @@ class LaneStore {
 	drop({source, target}) {
 		if (source.noteId === target.noteId) return;
 		if (source.laneId === target.laneId) {
-			console.log(`Move note ${source.noteId} to note ${target.noteId} inside lane ${source.laneId}.`);
+			const srcLaneIndex = this.findLaneIndex(source.laneId);
+			if (srcLaneIndex < 0) return;
+			const lanes = this.lanes;
+			const srcLane = lanes[srcLaneIndex];
+			const notes = srcLane.notes;
+			const srcNoteIndex = srcLane.notes.indexOf(source.noteId);
+			const srcNotes = this.removeAt(notes, srcNoteIndex);
+			const targetIndex = srcNotes.indexOf(target.noteId);
+			srcLane.notes = this.insertAt(srcNotes, targetIndex, source.noteId);
+			this.setState({lanes});
 		} else {
 			console.log(`Move note ${source.noteId} from lane ${source.laneId} to note ${target.noteId} in lane ${target.laneId}.`);
 		}
+	}
+	
+	removeAt(arr, index) {
+		return arr.slice(0, index).concat(arr.slice(index+1));
+	}
+	
+	insertAt(arr, index, item) {
+		return arr.slice(0, index).concat(item).concat(arr.slice(index));
 	}
 	
 	findLaneIndex(id) {
