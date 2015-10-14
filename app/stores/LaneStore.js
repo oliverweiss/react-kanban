@@ -85,7 +85,12 @@ class LaneStore {
 	}
 	
 	drop({source, target}) {
-		console.log(`Move note ${source.noteId} from lane ${source.laneId} to note ${target.noteId} in lane ${target.laneId}.`);
+		if (source.noteId === target.noteId) return;
+		if (source.laneId === target.laneId) {
+			console.log(`Move note ${source.noteId} to note ${target.noteId} inside lane ${source.laneId}.`);
+		} else {
+			console.log(`Move note ${source.noteId} from lane ${source.laneId} to note ${target.noteId} in lane ${target.laneId}.`);
+		}
 	}
 	
 	findLaneIndex(id) {
