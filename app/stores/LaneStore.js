@@ -86,29 +86,20 @@ class LaneStore {
 	
 	drop({source, target}) {
 		if (source.noteId === target.noteId) return;
-		if (source.laneId === target.laneId) {
-			const srcLaneIndex = this.findLaneIndex(source.laneId);
-			if (srcLaneIndex < 0) return;
-			const lanes = this.lanes;
-			const srcLane = lanes[srcLaneIndex];
-			const srcNoteIndex = srcLane.notes.indexOf(source.noteId);
-			const srcNotes = this.removeAt(srcLane.notes, srcNoteIndex);
-			const trgNoteIndex = srcNotes.indexOf(target.noteId);
-			srcLane.notes = this.insertAt(srcNotes, trgNoteIndex, source.noteId);
-			this.setState({lanes});
-		} else {
-			const srcLaneIndex = this.findLaneIndex(source.laneId);
-			const trgLaneIndex = this.findLaneIndex(target.laneId);
-			if (srcLaneIndex < 0 || trgLaneIndex < 0) return;
-			const lanes = this.lanes;
-			const srcLane = lanes[srcLaneIndex];
-			const trgLane = lanes[trgLaneIndex];
-			const srcNoteIndex = srcLane.notes.indexOf(source.noteId);
-			const trgNoteIndex = trgLane.notes.indexOf(target.noteId);
-			srcLane.notes = this.removeAt(srcLane.notes, srcNoteIndex);
-			trgLane.notes = this.insertAt(trgLane.notes,trgNoteIndex, source.noteId);
-			this.setState({lanes});
-		}
+		
+		const srcLaneIndex = this.findLaneIndex(source.laneId);
+		const trgLaneIndex = this.findLaneIndex(target.laneId);
+		if (srcLaneIndex < 0 || trgLaneIndex < 0) return;
+		
+		const srcLane = this.lanes[srcLaneIndex];
+		const trgLane = this.lanes[trgLaneIndex];
+		const srcNoteIndex = srcLane.notes.indexOf(source.noteId);
+		const trgNoteIndex = trgLane.notes.indexOf(target.noteId);
+		if (srcNoteIndex < 0 || trgNoteIndex < 0) return;
+		
+		srcLane.notes = this.removeAt(srcLane.notes, srcNoteIndex);
+		trgLane.notes = this.insertAt(trgLane.notes,trgNoteIndex, source.noteId);
+		this.setState({lanes: this.lanes});
 	}
 	
 	removeAt(arr, index) {
