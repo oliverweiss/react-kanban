@@ -102,7 +102,6 @@ class LaneNotes extends React.Component {
 	dragNote(laneId, noteId, ev) {
 		ev.dataTransfer.effectAllowed = 'move';
 		ev.dataTransfer.setData("text/json", JSON.stringify({laneId, noteId}));
-		console.log(`Note dragged: ${laneId}, ${noteId}.`);
 	}
 }
 
