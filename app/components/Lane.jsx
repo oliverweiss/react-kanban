@@ -92,11 +92,11 @@ class LaneNotes extends React.Component {
 		NoteActions.delete(noteId);
 	}
 	
-	dropNote(laneId, noteId, ev) {
+	dropNote(laneId, noteId, ev, placement) {
 		ev.preventDefault();
 		const source = JSON.parse(ev.dataTransfer.getData("text/json"));
 		const target = {laneId, noteId};
-		LaneActions.drop({source, target});
+		LaneActions.drop({source, target, placement});
 	}
 	
 	dragNote(laneId, noteId, ev) {

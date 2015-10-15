@@ -30,6 +30,8 @@ export default class Note extends React.Component {
 	}
 	
 	onDrop(noteId, ev) {
-		this.props.dropNote(noteId, ev);
+		const target = React.findDOMNode(this);
+		const placement = target.offsetTop + target.offsetHeight / 2 > ev.clientY ? "before" : "after";
+		this.props.dropNote(noteId, ev, placement);
 	}
 }

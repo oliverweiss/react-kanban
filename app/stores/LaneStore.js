@@ -84,7 +84,7 @@ class LaneStore {
 			console.warn(`Failed to remove note ${noteId} from lane ${laneId}`);
 	}
 	
-	drop({source, target}) {
+	drop({source, target, placement}) {
 		if (source.noteId === target.noteId) return;
 		
 		const srcLaneIndex = this.findLaneIndex(source.laneId);
@@ -98,7 +98,9 @@ class LaneStore {
 		if (srcNoteIndex < 0 || trgNoteIndex < 0) return;
 		
 		srcLane.notes = this.removeAt(srcLane.notes, srcNoteIndex);
-		trgLane.notes = this.insertAt(trgLane.notes,trgNoteIndex, source.noteId);
+		console.log(placement);
+		var insertNoteIndex = trgNoteIndex + (placement != "before")
+		trgLane.notes = this.insertAt(trgLane.notes,insertNoteIndex, source.noteId);
 		this.setState({lanes: this.lanes});
 	}
 	
