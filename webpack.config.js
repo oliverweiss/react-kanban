@@ -17,7 +17,7 @@ var common = {
   },
   module:{
     loaders: [
-      {test: /\.css$/, loaders: ['style', 'css'], include: path.resolve(ROOT_PATH, 'app')}
+      {test: /\.css$/, loaders: ['style', 'css'], include: path.resolve(ROOT_PATH, 'app')},
     ]
   },
   plugins: [
@@ -41,5 +41,22 @@ module.exports = merge(common, {
       ]
     },
     plugins: [new webpack.HotModuleReplacementPlugin()]  
+  });  
+}
+
+if (TARGET == 'build') {
+module.exports = merge(common, {
+    devtool : 'source-map',
+    devServer: {
+      historyApiFallback: true,
+      hot: true,
+      inline: true,
+      progress: true
+    },
+    module:{
+      loaders: [
+        {test: /\.js[x]?$/, loaders: ['babel'], include: path.resolve(ROOT_PATH, 'app')}
+      ]
+    }
   });  
 }
