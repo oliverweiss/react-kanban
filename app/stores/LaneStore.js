@@ -94,7 +94,7 @@ class LaneStore {
 		const srcLane = this.lanes[srcLaneIndex];
 		const trgLane = this.lanes[trgLaneIndex];
 		const srcNoteIndex = srcLane.notes.indexOf(source.noteId);
-		const trgNoteIndex = trgLane.notes.indexOf(target.noteId);
+		const trgNoteIndex = trgLane.notes.length == 0 ? 0 : trgLane.notes.indexOf(target.noteId);
 		if (srcNoteIndex < 0 || trgNoteIndex < 0) return;
 		srcLane.notes = this.removeAt(srcLane.notes, srcNoteIndex);
 		var insertNoteIndex = trgNoteIndex + (placement == "after" && trgNoteIndex <= srcNoteIndex);

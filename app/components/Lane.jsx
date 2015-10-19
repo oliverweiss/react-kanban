@@ -69,6 +69,7 @@ class LaneNotes extends React.Component {
 		this.removeNote = this.removeNote.bind(this, id);
 		this.dragNote = this.dragNote.bind(this, id);
 		this.dropNote = this.dropNote.bind(this, id);
+		this.onDrop = this.onDrop.bind(this);
 	}
 
 	render() {
@@ -79,7 +80,9 @@ class LaneNotes extends React.Component {
 				onEdit={this.editNote}
 				onRemove={this.removeNote}
 				dropNote={this.dropNote}
-				dragNote={this.dragNote} />
+				dragNote={this.dragNote}
+				onDrop={this.onDrop}
+				onDragOver={this.allowDrop} />
 		);
 	}
 
@@ -102,6 +105,12 @@ class LaneNotes extends React.Component {
 	dragNote(laneId, noteId, ev) {
 		ev.dataTransfer.effectAllowed = 'move';
 		ev.dataTransfer.setData("text/json", JSON.stringify({laneId, noteId}));
+	}
+	
+	allowDrop(ev) { ev.preventDefault(); }
+	
+	onDrop(ev) {
+		this.dropNote(0, ev, "before");
 	}
 }
 
