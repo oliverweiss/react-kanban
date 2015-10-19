@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var Clean = require('clean-webpack-plugin');
 var merge = require('webpack-merge');
 var pkg = require('./package.json');
 
@@ -64,6 +65,7 @@ module.exports = merge(common, {
       ]
     },
     plugins: [
+      new Clean(['build']),
       new webpack.optimize.CommonsChunkPlugin('vendor', '[name].[chunkhash].js'),
       new webpack.DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify('production')}}),
       new webpack.optimize.UglifyJsPlugin({ compress: {warnings: false}})
