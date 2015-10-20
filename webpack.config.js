@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var Clean = require('clean-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var merge = require('webpack-merge');
 var pkg = require('./package.json');
 
@@ -19,11 +20,6 @@ var common = {
     path: BUILD_PATH,
     filename: 'bundle.js'
   },
-  module:{
-    loaders: [
-      {test: /\.css$/, loaders: ['style', 'css'], include: APP_PATH},
-    ]
-  },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Kanban app'
@@ -31,7 +27,7 @@ var common = {
 }
 
 if (TARGET == 'start' || !TARGET){
-module.exports = merge(common, {
+var start = merge(common, {
     devtool : 'eval-source-map',
     devServer: {
       historyApiFallback: true,
@@ -41,11 +37,14 @@ module.exports = merge(common, {
     },
     module:{
       loaders: [
-        {test: /\.js[x]?$/, loaders: ['react-hot', 'babel'], include: APP_PATH}
+        {test: /\.js[x]?$/, loaders: ['react-hot', 'babel'], include: APP_PATH},
+        {test: /\.css$/, loaders: ['style', 'css'], include: APP_PATH}        
       ]
     },
     plugins: [new webpack.HotModuleReplacementPlugin()]  
-  });  
+  }); 
+  console.log(start.module.loaders[1]);
+  module.exports = start;
 }
 
 if (TARGET == 'build') {
@@ -59,13 +58,15 @@ module.exports = merge(common, {
       filename: '[name].[chunkhash].js'
     },
     devtool : 'source-map',
-    module:{
+        module:{
       loaders: [
-        {test: /\.js[x]?$/, loaders: ['babel'], include: APP_PATH}
+        {test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css'), include: APP_PATH},        
+        {test: /\.js[x]?$/, loader: 'babel', include: APP_PATH}
       ]
     },
     plugins: [
       new Clean(['build']),
+      new ExtractTextPlugin('styles.[chunkhash].css'),
       new webpack.optimize.CommonsChunkPlugin('vendor', '[name].[chunkhash].js'),
       new webpack.DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify('production')}}),
       new webpack.optimize.UglifyJsPlugin({ compress: {warnings: false}})
