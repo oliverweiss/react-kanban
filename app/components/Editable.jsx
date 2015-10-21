@@ -43,7 +43,7 @@ export default class Editable extends React.Component {
 	}
 	
 	renderRemove() {
-		return <button className='remove' onClick={this.props.onRemove}>X</button>
+		return <button className="remove" onClick={this.props.onRemove}>X</button>
 	}
 	
 	edit() {

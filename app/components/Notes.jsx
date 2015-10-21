@@ -13,7 +13,7 @@ export default class Notes extends React.Component {
 	render() {
 		const notes = this.props.items;
 		return (
-			<ul className='notes' {...this.props}>
+			<ul className="notes" {...this.props}>
 				{notes.map(this.renderNote)}
 			</ul>);
 	}

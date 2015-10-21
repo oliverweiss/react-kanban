@@ -10,7 +10,7 @@ export default class App extends React.Component {
 		const lanes = this.props.lanes;
 		return (
 			<div>
-				<button className='add-lane' onClick={this.addLane}>Add lane</button>
+				<button className="add-lane" onClick={this.addLane}>Add lane</button>
 				<Lanes items={lanes}/>
 			</div>
 		);

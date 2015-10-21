@@ -13,8 +13,8 @@ export default class Note extends React.Component {
 		const {id, ...props} = this.props;
 		
 		return (
-			<li className='note'
-				draggable='true'
+			<li className="note"
+				draggable="true"
 				onDragStart={this.onDragStart}
 				onDrop={this.onDrop}
 				onDragOver={this.allowDrop}>
@@ -31,7 +31,7 @@ export default class Note extends React.Component {
 	
 	onDrop(noteId, ev) {
 		const target = React.findDOMNode(this);
-		const placement = target.offsetTop + target.offsetHeight / 2 > ev.clientY ? "before" : "after";
+		const placement = target.offsetTop + target.offsetHeight / 2 > ev.clientY ? 'before' : 'after';
 		this.props.dropNote(noteId, ev, placement);
 	}
 }

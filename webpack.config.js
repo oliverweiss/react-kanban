@@ -16,6 +16,11 @@ var common = {
   resolve:{
     extensions: ['','.js', '.jsx']
   },
+  module: {
+    preLoaders: [
+      {test: /\.js[x]?$/, loaders: ['eslint'], include: APP_PATH},
+    ]
+  },
   output: {
     path: BUILD_PATH,
     filename: 'bundle.js'
@@ -47,7 +52,7 @@ var start = merge(common, {
   module.exports = start;
 }
 
-if (TARGET == 'build') {
+if (TARGET == 'build' || TARGET == 'stats') {
 module.exports = merge(common, {
     entry: {
       app: APP_PATH,

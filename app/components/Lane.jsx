@@ -54,7 +54,7 @@ class LaneHeader extends React.Component {
 	}
 	
 	addNote(laneId) {
-		NoteActions.create({task: "New task"});
+		NoteActions.create({task: 'New task'});
 		LaneActions.attach({laneId});
 	}	
 }
@@ -97,20 +97,21 @@ class LaneNotes extends React.Component {
 	
 	dropNote(laneId, noteId, ev, placement) {
 		ev.preventDefault();
-		const source = JSON.parse(ev.dataTransfer.getData("text/json"));
+		const source = JSON.parse(ev.dataTransfer.getData('text/json'));
 		const target = {laneId, noteId};
 		LaneActions.drop({source, target, placement});
 	}
 	
 	dragNote(laneId, noteId, ev) {
 		ev.dataTransfer.effectAllowed = 'move';
-		ev.dataTransfer.setData("text/json", JSON.stringify({laneId, noteId}));
+		ev.dataTransfer.setData('text/json',
+			JSON.stringify({laneId, noteId}));
 	}
 	
 	allowDrop(ev) { ev.preventDefault(); }
 	
 	onDrop(ev) {
-		this.dropNote(0, ev, "before");
+		this.dropNote(0, ev, 'before');
 	}
 }
 
